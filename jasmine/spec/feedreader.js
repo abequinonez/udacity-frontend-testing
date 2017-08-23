@@ -61,12 +61,32 @@ $(function() {
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
+         it('is hidden by default', function() {
+            /*
+            The following Stack Overflow discussion was used as a reference in
+            getting an element's class:
+            https://stackoverflow.com/questions/964119/how-to-get-the-class-of-the-clicked-element
+            */
+            expect($('body').attr('class')).toBe('menu-hidden');
+         });
 
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+          it('changes visibility when the menu icon is clicked', function() {
+            /*
+            The following Stack Overflow discussion helped me in deciding to use
+            jQuery's .trigger() method for this test:
+            https://stackoverflow.com/questions/10823790/testing-a-click-event-with-jasmine-that-appends-a-style-sheet-to-the-head
+            */
+            $('.menu-icon-link').trigger('click');
+            expect($('body').attr('class')).toBe('');
+
+            $('.menu-icon-link').trigger('click');
+            expect($('body').attr('class')).toBe('menu-hidden');
+          });
     });
 
     /* TODO: Write a new test suite named "Initial Entries" */
