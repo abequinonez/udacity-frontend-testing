@@ -26,33 +26,30 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-
         /* Write a test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
-         it('contain a URL and the URL is not empty', function() {
+        it('contain a URL and the URL is not empty', function() {
             allFeeds.forEach(function(feed) {
                 expect(feed.url).toBeDefined();
                 expect(typeof feed.url).toBe('string');
                 expect(feed.url).not.toBe('');
             });
-         });
-
+        });
 
         /* Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
-         it('have a name and the name is not empty', function() {
+        it('have a name and the name is not empty', function() {
             allFeeds.forEach(function(feed) {
                 expect(feed.name).toBeDefined();
                 expect(typeof feed.name).toBe('string');
                 expect(feed.name).not.toBe('');
             });
-         });
+        });
     });
-
 
     /* Write a new test suite named "The menu" */
     describe('The menu', function() {
@@ -61,32 +58,43 @@ $(function() {
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
-         it('is hidden by default', function() {
+        it('is hidden by default', function() {
             /*
+            To determine whether or not the menu is hidden by default, the body
+            element's class attribute is tested to see if it contains menu-hidden.
             The following Stack Overflow discussion was used as a reference in
             getting an element's class:
             https://stackoverflow.com/questions/964119/how-to-get-the-class-of-the-clicked-element
             */
             expect($('body').attr('class')).toBe('menu-hidden');
-         });
+        });
 
          /* Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-          it('changes visibility when the menu icon is clicked', function() {
+        it('changes visibility when the menu icon is clicked', function() {
             /*
             The following Stack Overflow discussion helped me in deciding to use
             jQuery's .trigger() method for this test:
             https://stackoverflow.com/questions/10823790/testing-a-click-event-with-jasmine-that-appends-a-style-sheet-to-the-head
             */
+
+            /*
+            The menu icon is clicked initially, which should reveal it. To test
+            this, the body's class attribute should be empty after clicking.
+            */
             $('.menu-icon-link').trigger('click');
             expect($('body').attr('class')).toBe('');
 
+            /*
+            The menu icon is clicked again, which should hide it. The body's
+            class attribute should contain menu-hidden.
+            */
             $('.menu-icon-link').trigger('click');
             expect($('body').attr('class')).toBe('menu-hidden');
-          });
+        });
     });
 
     /* Write a new test suite named "Initial Entries" */
@@ -97,14 +105,21 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+
+        // First call the loadFeed function with the first (default) feed passed in
         beforeEach(function(done) {
             loadFeed(0, function() {
                 done();
             });
         });
 
+        // After the loadFeed function is completed, begin the actual test
         it('are loaded and there is at least a single entry', function(done) {
-            // jQuery site (https://api.jquery.com/find/) used as a reference
+            /*
+            Determine whether or not at least one .entry element exists within
+            the .feed container.
+            jQuery site (https://api.jquery.com/find/) used as a reference.
+            */
             expect($('.feed').find('.entry').length).toBeGreaterThan(0);
             done();
         });
@@ -116,6 +131,8 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+
+        // Declare these variables outside of the functions below
         var oldFeed;
         var newFeed;
         beforeEach(function(done) {
