@@ -117,15 +117,18 @@ $(function() {
             loadFeed(0, done);
         });
 
-        // After the loadFeed function is completed, begin the actual test
-        it('are loaded and there is at least a single entry', function(done) {
+        /*
+        After the loadFeed function is completed, begin the actual test.
+        Since it was redundant, the done callback function was removed,
+        as suggested by a Udacity reviewer.
+        */
+        it('are loaded and there is at least a single entry', function() {
             /*
             Determine whether or not at least one .entry element exists within
             the .feed container.
             jQuery site (https://api.jquery.com/find/) used as a reference.
             */
             expect($('.feed').find('.entry').length).toBeGreaterThan(0);
-            done();
         });
     });
 
