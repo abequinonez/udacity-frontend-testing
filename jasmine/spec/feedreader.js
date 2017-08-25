@@ -110,9 +110,11 @@ $(function() {
 
         // First call the loadFeed function with the first (default) feed passed in
         beforeEach(function(done) {
-            loadFeed(0, function() {
-                done();
-            });
+            /*
+            As suggested by a Udacity reviewer, this loadFeed function call was
+            simplified, since there wasn't any code inside of it.
+            */
+            loadFeed(0, done);
         });
 
         // After the loadFeed function is completed, begin the actual test
