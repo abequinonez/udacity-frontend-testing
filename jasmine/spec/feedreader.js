@@ -61,12 +61,13 @@ $(function() {
         it('is hidden by default', function() {
             /*
             To determine whether or not the menu is hidden by default, the body
-            element's class attribute is tested to see if it contains menu-hidden.
-            The following Stack Overflow discussion was used as a reference in
-            getting an element's class:
-            https://stackoverflow.com/questions/964119/how-to-get-the-class-of-the-clicked-element
+            element is tested to see if it contains the menu-hidden class. As
+            suggested by a Udacity reviewer, I made the change from using jQuery's
+            .attr('class') method to the .hasClass method. In doing so, the body
+            element can be tested to see if it contains the menu-hidden class,
+            even when it contains other classes.
             */
-            expect($('body').attr('class')).toBe('menu-hidden');
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         });
 
          /* Write a test that ensures the menu changes
@@ -82,18 +83,19 @@ $(function() {
             */
 
             /*
-            The menu icon is clicked initially, which should reveal it. To test
-            this, the body's class attribute should be empty after clicking.
+            Like the test above, this test was reworked using jQuery's .hasClass
+            method. After the menu icon is clicked initially, the body element
+            should not contain the menu-hidden class.
             */
             $('.menu-icon-link').trigger('click');
-            expect($('body').attr('class')).toBe('');
+            expect($('body').hasClass('menu-hidden')).toBe(false);
 
             /*
-            The menu icon is clicked again, which should hide it. The body's
-            class attribute should contain menu-hidden.
+            The menu icon is clicked again, which should hide the menu. The body
+            should contain the menu-hidden class.
             */
             $('.menu-icon-link').trigger('click');
-            expect($('body').attr('class')).toBe('menu-hidden');
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         });
     });
 
