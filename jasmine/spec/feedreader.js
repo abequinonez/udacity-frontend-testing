@@ -139,28 +139,40 @@ $(function() {
          * Remember, loadFeed() is asynchronous.
          */
 
-        // Declare these variables outside of the functions below
+        /*
+        Declare these variables outside of the functions below. They will
+        store the first entry of the first and second feeds loaded below.
+        They will then be compared for equality by the 'it' function.
+        */
         var oldFeed;
         var newFeed;
         beforeEach(function(done) {
-            // Load the first feed and save its first entry to a variable
-            loadFeed(0, function() {
-                oldFeed = $('.feed').find('.entry')[0];
+          // Load the first feed and save its first entry to a variable
+          loadFeed(0, function() {
+                /*
+                The following lines of code that target the first entry were reworked
+                to target and store the first entry's text content, as suggested by a
+                Udacity reviewer.
+                */
+                oldFeed = $('.feed').find('.entry h2').first().text();
 
                 // Load the second feed and save its first entry to a variable
                 loadFeed(1, function() {
-                    newFeed = $('.feed').find('.entry')[0];
+                    newFeed = $('.feed').find('.entry h2').first().text();
                     done();
                 });
             });
         });
 
-        it('changes content', function(done) {
-            // Compare the two variables. They should be different.
-            expect(oldFeed !== newFeed).toBe(true);
+        it('changes content', function() {
+            /*
+            Compare the two variables containing the first and second feed's
+            first entry text content. They should be different, which would
+            demonstrate that the content changed upon loading a new feed.
+            */
+            expect(oldFeed).not.toEqual(newFeed);
             expect(oldFeed).toBeDefined();
             expect(newFeed).toBeDefined();
-            done();
         });
     });
 }());
